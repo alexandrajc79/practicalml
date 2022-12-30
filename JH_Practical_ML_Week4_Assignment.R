@@ -10,7 +10,7 @@ library(elasticnet)
 
 install.packages("~/MyRLibs/shape_1.4.6.tar.gz", repos = NULL, lib = "/usr/local/lib/R/site-library")
 install.packages("~/MyRLibs/glmnet_4.1-6.tar.gz", repos = NULL, lib = "/usr/local/lib/R/site-library")
-library(glmet)
+library(glmnet)
 
 #load training and testing data
 training<-read.csv("pml-training.csv")
@@ -43,10 +43,9 @@ print(modelGLM)
 #RMSE      Rsquared  MAE      
 #1.142357  0.4343478  0.8169056
 
-modlasso <- train(classe ~ ., ds_train, method="lasso")
-
-predlass <- predict(modlasso, ds_test)
-print(predlass)
+modlasso <- train(classe ~ ., ds_train, method="lasso",preProcess=c("center","scale"))
+predlasso <- predict(modlasso, ds_test)
+print(modlasso)
 #fraction  RMSE      Rsquared   MAE      
 #0.1       1.232099  0.3229802  1.0385323
 #0.5       1.126277  0.4308748  0.8393484
